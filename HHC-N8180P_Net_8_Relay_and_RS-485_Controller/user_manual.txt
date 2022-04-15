@@ -1,0 +1,162 @@
+A. Electrical parameters
+1, power supply DC 7-24 volts, optional DC block or terminal block input power, DC connector specifications 5.5-2.1MM (OD - ID) with 5.5-2.5MM input will lead to poor contact. There will be electric not lights on and off, communication connection can not be.
+2, the board operating temperature range -40 degrees Celsius to 85 degrees Celsius.
+       3, 8-way independent relay output, the output without voltage. Single relay DC rating is 10A, AC rated current value is 10A, the maximum AC rating is 250V, the maximum DC rating is 30V. do not exceed the rated value during use, use to leave a margin. The relay has three contacts, which are normally open (indicated by NO on the product silkscreen) contact, normally closed contact (indicated by NC), and common contact (indicated by COM) followed by a number indicating the channel of the relay. (Relay wiring refer to the appendix at the back of this manual)
+        IN9 means fully open, when IN9 has switch input, all relays will be closed, IN10 means fully closed, when IN10 has input, all relays will be closed. 8 inputs, IN1-IN8, can be configured to work in three different ways by the user through the configuration parameter tool, which can be selected under "Input Mode" in the configuration tool. The "input mode" is selected under the configuration tool. The "Normal Input" mode is a normal input signal acquisition, to get the input status, send a read input status command to the device. "Trigger relay" mode, this mode has input, the corresponding relay state flip, IN1-IN8 control corresponds to 1-8 way relay. "Active upload" mode, this mode will actively send the input status to the network connected to the device when there is a change in the input.
+        5. The device has an RS485 interface. It can be connected to RS485 devices of other manufacturers for control. Possible to achieve network data to RS485 data transparent transmission, baud rate 300-115200 can be configured, when using parity, the data bits must be configured to 9 bits, serial port parameters through the configuration tool configuration.
+        6, the device comes with a power-down save function, which can save the state of the relay and can be configured through the configuration tool.
+        7, reset configuration. Silkscreen mark RESET position is to restore the factory settings button. Restore factory settings steps: first power off, then press and hold the reset button does not move, and then power up the product, 10 seconds after releasing the button, and then re-power. The default IP is 192.168.0.105.
+
+Second, the parameters configuration
+      Open the configuration software, select the NIC, and click the "Search" button. After searching for the device, the interface is as follows.
+
+
+Above you can see the search out a 192.168.0.105 IP, double-click the IP to read the device parameters. To modify the parameters must be read out by double-clicking to modify.
+
+   Modify the parameters to be set, click the "Save Settings" button, if the settings are successful, the device success dialog box will pop up.
+The following interface is the pop-up window of successful setting.
+
+  Search Failure Explanation  
+     There are several reasons for not being able to search.
+1, the configuration tool in the network card selection is not correct.
+2, WINDOWS comes with a firewall to disable the search software network connection, note that the WINDOWS comes with a firewall, to turn off, turn off the interface as follows.
+
+3, antivirus software or other software to disable the network connection of the configuration tool. For example, 360 Security Guard, 360 antivirus software, QQ Butler. Turn off on the normal.
+ Third, the configuration interface description
+     A complete configuration interface is as follows
+
+
+Network card selection: drop-down list of all active network cards of the computer where the configuration tool is located.
+
+Device list: consists of device name plus device IP. The searched devices are displayed here, click the "Clear
+Click the "Clear Device" button below to clear the device list.
+ 
+Working Mode: The device can be configured to work in five working modes: TCP server, TCP client, UDP server, UDP client, DNS domain name. In the DNS domain name working mode, the device interprets the domain name in the "Domain Name" box to get the IP address, and then the device connects to the remote TCP server as a TCP client. The "Remote Port" is the port of the remote TCP server.
+
+Device IP: is the IP of the device.
+
+In other working modes, this parameter is invalid.
+
+Device Port: The port of the device's switch quantity (control relay output and read switch quantity input). The device comes with an RS485 port (to achieve transparent transmission from the network to RS485). For data transmission, the network port of RS485 is the device port value plus 1. For example, if this port value is 5000, then 5001 is the network port of RS485, and the data sent to port 5001 will come out from RS485.
+
+Remote port: The port of the remote host to which the device works in TCP client or UDP client, or DNS domain name mode. In other operating modes, this parameter is invalid. This port is the remote port of the switch, and this value plus 1 is the remote port of the RS485 network.
+ 
+Subnet Mask: The subnet mask of the device.
+
+Gateway: The gateway of the device.
+
+Device Name: The device name can be customized, either numeric or alphabetic or Chinese.
+
+MAC address: default 485300575500, multiple devices use modified into different, the front 48 do not change, other positions can be changed at will.
+
+Input mode: There are three input modes: ordinary input, trigger relay, and active upload. Ordinary input mode, is the ordinary acquisition input IN1-IN8 which is the 8-way switching input. Trigger relay mode, IN1-IN8 input trigger the corresponding 8-way relay, active upload mode, when IN1-IN8 input state has changed, will automatically send the state to the connected network.
+
+Domain name: In the case of connecting to the public network, if the remote host IP is bound with a domain name, you can use this to connect, and select "DNS domain name" working mode.
+
+Obtain IP automatically: If this option is checked, connect to the router, and the router should be enabled to obtain IP automatically, otherwise the device can not be used because it can not automatically obtain the correct IP.
+
+Power down save: If this option is checked, the power down will save the relay's suction state. Power on will self-recover the state of the relay.
+
+Serial port parameters: Baud rate range 300-115200, parity with odd parity, even parity and no parity. When using parity, the data bit should be increased by one, for example, the original is using 8-bit data bit without parity communication type, if using odd or even parity, the data bit should be set to 9 bits. Otherwise it will lead to incorrect communication.
+
+MODBUS TCP: After this option is color selected, the transparent transmission from Ethernet to RS485 becomes MODBUS TCP to MODBUS RTU conversion.
+
+Heartbeat packet time: the interval of sending heartbeat packets cyclically, in seconds.
+
+Heartbeat packet: the content of the heartbeat packet, it can be customized, the content can be numbers, letters, numbers and letters combination. Heartbeat packets are sent to all connected networks at the same time.
+
+Communication detection: communication detection time in seconds, (this time, if set too small, will lead to cyclic reboot) If no data is received within the set heartbeat time, the device will be forced to reboot. This function can be used with heartbeat packets to achieve network detection. For example, set the heartbeat packet to 5 seconds and the communication detection to 1 minute. After the connected network receives the heartbeat packet, it replies with a valid command (e.g. read) to achieve online detection.
+
+IV. Command explanation
+   The above commands are sent and received in character form. The command is not followed by a carriage return, without spaces. To send hexadecimal to check the ASCII code table to convert themselves.
+
+Get the device name
+           Send: name
+           Return: name="HHC-N8I8OP"
+   HHC-N8I8OP is the name of the device, you can use the configuration tool to configure it by yourself.
+
+Control 1 way relay
+           Send: on1
+           Return: on1
+
+Turn off the first relay
+           Send: off1
+           Return: off1
+   Command format is on and off followed by relay channels, 2-8 channels control as above.
+
+Control all relays 
+Send: all00000011
+Return��relay00000011
+     all is to control all relays command, followed by 8-way control, 1 means sucking, 0 means releasing the above command means the first channel and the second channel sucking, the 3rd-8th channel releasing. This instruction returns the state of the relay after execution, the state of the relay returns the same information as the read instruction.    
+
+Time delay control
+For example, if you want the relay to be closed for 2 seconds and then released, you can send the following command
+     Send: on1:02
+     Return: on1
+The above command means that the relay will be released after 2 seconds, on1: means the relay to be controlled, followed by a delay time of up to 99 seconds, for example, on2:12 means the second relay will be released after 12 seconds. Other 2-8 way control is the same as above.
+
+Read relay status
+        Send: read
+        Return: relay00000001 (indicates the state of the 8-way relay, 1 means the relay is closed, 0 means if the relay is released, the above means the first relay is closed, 2-8 way relay is released)
+
+Read switch quantity
+Send: input
+Return: input00000001
+Input followed by 00000001, 1 means there is switch input, 0 means there is no switch input, indicating the input status of the 8-way switch, the above instruction means the first way has switch input, 2-8 way has no switch input. The 9th and 10th switch is used to control the relay to be fully open and fully closed, and cannot be read. The input is configured as "active upload", when the switch input changes, the above return information will be sent automatically.
+
+V. Working mode description
+    Test environment: computer system WINDOWS 10 64-bit, computer IP, 192.168.0.100, gateway 192.168.0.1, subnet mask 255.255.255.0
+1、TCP server
+   The device configuration parameters are shown below.
+
+Connect the switch port of the device and send on1 to turn on the first relay.
+
+   Connect the RS485 network port, since the RS485 network port is the switch port plus 1, so from the above figure, we can get the RS485 network port is 5001.
+
+  Send abcd to port 5001, and the data abcd comes out from RS485 port.
+
+2、TCP client
+     The device configuration parameters are shown in the figure below.
+
+   From the above figure, we can see that the IP of the remote server is 192.168.0.100 and the remote port is 5000. then we have to create two ports on the computer with IP 192.168.0.100, one is 5000 for the switch connection and one is 5001 for the RS485 connection (the remote port of RS485 is the value of the remote port plus 1), so that the device connected. The switch quantity is shown in the following figure.
+
+  The above figure shows that the switching port of the device has been connected to the network test assistant of the TCP server as a TCP client. the interface of RS485 is shown below.
+
+   The above figure shows that the network port of RS485 has been connected to the network test assistant as TCP server. Sending data abcd, the data comes out of RS485 port.
+
+3、UDP server side
+  The device configuration parameters are shown in the figure below.
+
+  The switch port is connected as shown below.
+
+RS485 port connection is shown below.
+
+4、UDP client
+The device configuration parameters are shown in the following figure.
+
+
+  Switching port connection is shown in the following figure.
+
+The RS485 port connection is shown in the following figure.
+
+
+
+5、DNS domain name
+  Fill in the domain name input box, the device will explain the actual IP of the domain name, and then the device connects to the TCP server where the domain name is located in the way of working in TCP client. refer to page 8 for TCP working mode.
+
+Six, wiring instructions
+1、Dry node switch wiring
+
+ 2、Active input 5V wiring
+
+3、Active input 12V wiring
+
+
+
+4、Relay output wiring
+
+Seven, test software description
+Test environment: computer system WINDOWS 10 64-bit, computer IP, 192.168.0.100, gateway 192.168.0.1, subnet mask 255.255.255.0
+   The device configuration parameters are shown in the figure below. Must be configured as a TCP server before you can use the test software, because the test software is working on the TCP client.
+
+   Open the test software and fill in the IP and port number.
