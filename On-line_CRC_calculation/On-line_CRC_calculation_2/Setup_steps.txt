@@ -1,0 +1,9 @@
+Use serial port assistant 
+1 Open the serial port assistant and set the parameters
+1 Read the voltage of channel 1   = 4.01v
+2 Read the voltage of channel 2   = 3.99V
+   (1)modify the register 
+   (2)   recalculate the CRC
+3 Follow step 2 for other channels   Channel 3 = 0A
+
+

@@ -1,0 +1,28 @@
+Use Modbus Poll 
+1 Open the Modbus Poll and set the parameters
+1 Set the start address and quantity (register) 
+2 This is the channel 1 voltage  = 4.01v
+2 This is the channel 2 voltage  = 3.99v
+3 CH3)C1 Current value   = 0.00MA
+4 CH4)C2 Current value   = 0.00MA
+
+(CH1)V1 voltage ratio = 1000
+
+This value can be corrected when the voltage/Current reading deviation is greater than 1%, such as:
+1000 means 1:1
+1010: 1% increase
+990: 1% decrease
+
+
+Modify the baud rate (repower on)  4:19200 repower on
+Modify Slave ID  = 2
+
+It can be used as a reference video for all RS485 devices of the eletechsup brand, such as:
+N4DAC02  N4DBA06 N4IOA01 N46IB02  R4AVA07
+
+
+
+
+
+
+
